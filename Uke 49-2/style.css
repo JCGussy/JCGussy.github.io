@@ -1,0 +1,44 @@
+* {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+
+    /* box-sizing:border-box; */
+}
+
+/* Global Styles */
+.rot-180 { transform: rotate(180deg); }
+
+/* Page Header */
+header#page-header {
+    width: 100%;
+    height: 160px;
+}
+
+header #page-logo {
+    margin: 1em 0 1em 5em;
+    width: 20%;
+}
+
+header #page-nav {
+    float: right;
+    margin: 4em 5em 2em 0;
+}
+
+/* Main Content */
+main {
+    /* background-color: #222222; */
+}
+
+/* Slideshow */
+.slideshow {
+    width: 100%;
+    margin: 0;
+}
+
+/* GAMMELT */
+
+
+footer > article > img {
+    height: 100px;
+}
