@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Archive</title>
+</head>
+<body>
+
+    <main id="main"></main>
+
+    <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyCET3pKfudHlQb_Qw0NQ7DmIwXC4IB9KpI",
+            authDomain: "pakkelister.firebaseapp.com",
+            databaseURL: "https://pakkelister.firebaseio.com",
+            projectId: "pakkelister",
+            storageBucket: "",
+            messagingSenderId: "774732928106"
+        };
+        firebase.initializeApp(config);
+    </script>
+
+    <script>
+
+        const db = firebase.database();
+        const bestillinger = db.ref("bestillinger");
+        const main = document.getElementById("main");
+
+        function visBestilling(snap){
+
+
+            snap.forEach(function(data){
+                console.log("TEETET");
+            });
+
+            let bestilling = snap.val();
+            let key = snap.key;
+            console.log("TEST");
+            main.innerHTML += `
+                <a href="detaljer.html?id=${key}">
+                    ${key}
+                </a>
+            `;
+        }
+
+        bestillinger.on("value", visBestilling);
+
+
+    </script>
+</body>
+</html>
