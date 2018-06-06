@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Upload files</title>
+    <style>
+        body {
+            background-color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            text-align: center;
+        }
+        main {
+            color: #777777;
+            padding: 10px;
+        }
+
+        body > header > nav {
+            display: grid;
+            grid-auto-flow: column;
+            font-size: x-large;
+            height: 100%;
+        }
+
+        nav > a {
+            text-decoration: none;
+            color: white;
+            background-color: #222222;
+            padding: 8px;
+        }
+
+        a:active {
+            background-color: #333333;
+        }
+
+        progress {
+            width: 25%;
+        }
+
+        main {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="Index.html">New Project</a>
+            <a href="Archive.html" >Archive</a>
+            <a href="upload.html" class="active">Upload files</a>
+            <a href="Helpfull%20sites.html">Helpfull Sites</a>
+        </nav>
+    </header>
+<main>
+    <progress value="0" max="100" id="uploader">0%</progress>
+    <input type="file" value="upload" id="fileButton" />
+
+</main>
+
+    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyCET3pKfudHlQb_Qw0NQ7DmIwXC4IB9KpI",
+            authDomain: "pakkelister.firebaseapp.com",
+            databaseURL: "https://pakkelister.firebaseio.com",
+            projectId: "pakkelister",
+            storageBucket: "pakkelister.appspot.com",
+            messagingSenderId: "774732928106"
+        };
+        firebase.initializeApp(config);
+
+        var uploader = document.getElementById('uploader');
+        var fileButton = document.getElementById('fileButton');
+
+        fileButton.addEventListener('change', function(e) {
+
+            var file = e.target.files[0];
+
+            var storageRef = firebase.storage().ref('MA2_showfiles/' + file.name);
+
+            var task = storageRef.put(file);
+
+            task.on('state_changed',
+
+            function progress(snapshot) {
+                var percentage = (snapshot.bytesTransferred / snapshot.totalBytes)*100;
+                uploader.value = percentage;
+            },
+            function error(err) {
+
+            },
+
+            function complete() {
+
+            }
+            );
+        })
+
+    </script>
+
+</body>
+</html>

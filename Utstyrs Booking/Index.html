@@ -5,166 +5,188 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Select Project</title>
     <style>
-        body{
-            border: none;
+        body {
+            background-color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
         }
-        header{
-            background-color: #222224;
-            height: 40px;
+        header {
+            text-align: center;
         }
-
-        main{
-            background-color: #222222;
+        main {
             color: #777777;
             padding: 10px;
         }
 
-        footer{
-
-        }
-
-        body > header >nav {
+        body > header > nav {
             display: grid;
             grid-auto-flow: column;
             font-size: x-large;
-            font-family: "Bauhaus 93";
-            text-decoration: none;
-            text-align: center;
-
+            height: 100%;
         }
 
-        .active{
+        nav > a {
+            text-decoration: none;
+            color: white;
+            background-color: #222222;
+            padding: 8px;
+        }
+
+        a:active {
             background-color: #333333;
+        }
+
+        form > div > input {
+            display: block;
+        }
+
+        form > button {
+            display: block;
+        }
+
+        h1, h2 {
+            color: black;
+        }
+
+        main > * {
+            display: block;
+            margin: 8px auto;
+        }
+
+        main > h1 {
+            text-align: center;
+        }
+
+        main > input {
+            display: block;
+        }
+
+        #skjema > * {
+            margin: auto;
+        }
+
+        #skjema > div {
+            display: inline-block;
+            margin: 8px;
+        }
+
+        #skjema > div > *:not(h2){
+            margin: 8px 0;
+        }
+
+        #inpKunde {
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="#" class="active">New Project</a>
-            <a href="#">Archive</a>
-            <a href="#">Showfiles</a>
-            <a href="#">Helpfull Sites</a>
-        </nav>
-    </header>
-    <main>
-        <h1>Select Hardware</h1>
-            <form id="skjema">
-                <input type="text" id="inpKunde" required>
-                <h2>PA Equipment</h2>
-                    <input type="checkbox" data-pris="2000" data-item="iLive T-112">iLive T-112<br>
-                    <input type="checkbox" data-pris="1500" data-item="Nexo PS15">Nexo PS15 m/LS1200<br>
-                    <input type="checkbox" data-pris="2300" data-item="iLive T-112">Nexo PS10<br>
-                    <input type="number" value="0" data-item="D5" data-pris="20">AKG D5<br>
-                    <input type="number" value="0" data-item="Stativ 3" data-pris="200">Mic stativer 3-fot<br>
-                    <input type="number" value="0" data-item="Klumpfot stativ" data-pris="200">Klumpfot stativ<br>
-                    <input type="number" value="0" data-item="SnowPAR" data-pris="200">SnowPAR<br>
+<header>
+    <nav>
+        <a href="Index.html" class="active">New Project</a>
+        <a href="Archive.html">Archive</a>
+        <a href="upload.html">Upload files</a>
+        <a href="Helpfull%20sites.html">Helpfull Sites</a>
+    </nav>
+</header>
+<main>
+    <h1>Select Hardware</h1>
+    <input type="text" id="inpKunde" required placeholder="Prosjekt navn">
+    <form id="skjema">
+        <div id="lightingSelection">
+            <h2>Lighting gear</h2>
+            grandMA ultralight<input type="checkbox" data-pris="600" data-item="grandMA ultralight">
+            Sunstrip active<input type="number" value="0" data-item="Sunstrip active" data-pris="100">
+            SnowPAR<input type="number" value="0" data-item="SnowPAR" data-pris="150">
+            PAR 64<input type="number" value="0" data-item="PAR64" data-pris="50">
+            PAR 64 snubb<input type="number" value="0" data-item="Snubb-PAR" data-pris="50">
+            DDE 6Ch dimmer<input type="number" value="0" data-item="DDE-dimmer" data-pris="150">
+            Stativer<input type="number" value="0" data-item="Stativ" data-pris="75">
+            T bom<input type="number" value="0" data-item="T-bom" data-pris="40">
+            PAR bom<input type="number" value="0" data-item="PAR-bom" data-pris="200">
+            Fresnell bom<input type="number" value="0" data-item="Fresnell-bom" data-pris="200">
+        </div>
+        <div id="PASelection">
+            <h2>PA Equipment</h2>
+            iLive T-112<input type="checkbox" data-pris="2000" data-item="iLive T-112">
+            Nexo PS15 m/LS1200<input type="checkbox" data-pris="1500" data-item="Nexo PS15">
+            Nexo PS10<input type="checkbox" data-pris="2300" data-item="iLive T-112">
+            AKG D5<input type="number" value="0" data-item="D5" data-pris="20">
+            Mic stativer 3-fot<input type="number" value="0" data-item="Stativ 3" data-pris="200">
+            Klumpfot stativ<input type="number" value="0" data-item="Klumpfot stativ" data-pris="200">
+            Peavey H10<input type="number" value="0" data-item="PeaveyH10" data-pris="500">
+        </div>
+        <button type="submit">Send bestilling</button>
+
+    </form>
+</main>
+
+<script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+<script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyCET3pKfudHlQb_Qw0NQ7DmIwXC4IB9KpI",
+        authDomain: "pakkelister.firebaseapp.com",
+        databaseURL: "https://pakkelister.firebaseio.com",
+        projectId: "pakkelister",
+        storageBucket: "pakkelister.appspot.com",
+        messagingSenderId: "774732928106"
+    };
+    firebase.initializeApp(config);
+</script>
 
 
 
-                <h2>Lighting gear</h2>
-                    <input type="checkbox" data-pris="600" data-item="grandMA ultralight">grandMA ultralight<br>
-                    <input type="number" value="0" data-item="Sunstrip active" data-pris="100">Sunstrip active<br>
-                    <input type="number" value="0" data-item="SnowPAR" data-pris="150">SnowPAR<br>
-                    <input type="number" value="0" data-item="PAR64" data-pris="50">PAR 64<br>
-                    <input type="number" value="0" data-item="Snubb-PAR" data-pris="50">PAR 64 snubb<br>
-                    <input type="number" value="0" data-item="DDE-dimmer" data-pris="150">DDE 6Ch dimmer<br>
-                    <input type="number" value="0" data-item="Stativ" data-pris="75">Stativer<br>
-                    <input type="number" value="0" data-item="T-bom" data-pris="40">T bom<br>
-                    <input type="number" value="0" data-item="PAR-bom" data-pris="200">PAR bom<br>
-                    <input type="number" value="0" data-item="Fresnell-bom" data-pris="200">Fresnell bom<br>
-
-                <div>
-                    <button type="submit">Send bestilling</button>
-                </div>
-
-            </form>
-    </main>
-
-
-    <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
-    <script>
-        // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyCET3pKfudHlQb_Qw0NQ7DmIwXC4IB9KpI",
-            authDomain: "pakkelister.firebaseapp.com",
-            databaseURL: "https://pakkelister.firebaseio.com",
-            projectId: "pakkelister",
-            storageBucket: "",
-            messagingSenderId: "774732928106"
-        };
-        firebase.initializeApp(config);
-    </script>
-
-    <script>
-
-        const db = firebase.database();
-        const pakkliste = db.ref("pakkliste");
-
-        const skjema = document.getElementById("skjema");
-        const inpKunde = document.getElementById("inpKunde");
-
-        // Use:
-        //
-        //     var privateName = ID();
-        //     var o = { 'public': 'foo' };
-        //     o[privateName] = 'bar';
-        var ID = function () {
-            // Math.random should be unique because of its seeding algorithm.
-            // Convert it to base 36 (numbers + letters), and grab the first 9 characters
-            // after the decimal.
-            return '_' + Math.random().toString(36).substr(2, 9);
-        };
-
-        function lagListe(evt){
-            evt.preventDefault();
-            const sjekkbokser = document.querySelectorAll("#skjema input[type=checkbox]:checked");
-            const tallbokser = document.querySelectorAll("#skjema input[type=number]");
-
-            let id = ID();
-
-            let bestillingen = db.ref("betillinger/" + inpKunde.value + new Date());
-
-            for(let sjekkboks of sjekkbokser){
-
-                let pris = Number(sjekkboks.getAttribute("data-pris"));
-                let navn = sjekkboks.getAttribute("data-item");
-                let antall = 1;
-
-                bestillingen.push({
-                   pris: pris,
-                   navn: navn,
-                   antall: antall
-                });
-
-            }
-
-
-
-            for(let tallboks of tallbokser){
-
-                let pris = Number(tallboks.getAttribute("data-pris"));
-                let navn = tallboks.getAttribute("data-item");
-                let antall = Number(tallboks.value);
-
-                if(antall > 0){
-                    bestillingen.push({
-                        pris: pris,
-                        navn: navn,
-                        antall: antall
-                    })
-                }
-
-            }
-
-            console.log(sjekkbokser);
-
-
+<script>
+    const db = firebase.database();
+    const pakkelister = db.ref("pakkelister");
+    const skjema = document.getElementById("skjema");
+    const inpKunde = document.getElementById("inpKunde");
+    // Use:
+    //
+    //     var privateName = ID();
+    //     var o = { 'public': 'foo' };
+    //     o[privateName] = 'bar';
+    var ID = function () {
+        // Math.random should be unique because of its seeding algorithm.
+        // Convert it to base 36 (numbers + letters), and grab the first 9 characters
+        // after the decimal.
+        return '_' + Math.random().toString(36).substr(2, 9);
+    };
+    function lagListe(evt){
+        evt.preventDefault();
+        const sjekkbokser = document.querySelectorAll("#skjema input[type=checkbox]:checked");
+        const tallbokser = document.querySelectorAll("#skjema input[type=number]");
+        let id = ID();
+        let bestillingen = db.ref("betillinger/" + inpKunde.value + " - " + new Date());
+        for(let sjekkboks of sjekkbokser){
+            let pris = Number(sjekkboks.getAttribute("data-pris"));
+            let navn = sjekkboks.getAttribute("data-item");
+            let antall = 1;
+            let child = bestillingen.child(navn);
+            child.set({
+                pris: pris,
+                navn: navn,
+                antall: antall
+            });
         }
-
-        skjema.onsubmit = lagListe;
-
-    </script>
+        for(let tallboks of tallbokser){
+            let pris = Number(tallboks.getAttribute("data-pris"));
+            let navn = tallboks.getAttribute("data-item");
+            let antall = Number(tallboks.value);
+            let child = bestillingen.child(navn);
+            if(antall > 0){
+                child.set({
+                    pris: pris,
+                    navn: navn,
+                    antall: antall
+                });
+            }
+        }
+        document.location.href = "Archive.html";
+    }
+    skjema.onsubmit = lagListe;
+</script>
 
 </body>
 </html>

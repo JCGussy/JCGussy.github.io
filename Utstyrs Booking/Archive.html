@@ -1,54 +1,123 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="no">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Archive</title>
+    <title>Pakkelister</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation-float.min.css">
+    <style>
+        body {
+            background-color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            text-align: center;
+        }
+        main {
+            color: #777777;
+            padding: 10px;
+        }
+
+        body > header > nav {
+            display: grid;
+            grid-auto-flow: column;
+            font-size: x-large;
+            height: 100%;
+        }
+
+        nav > a {
+            text-decoration: none;
+            color: white;
+            background-color: #222222;
+            padding: 8px;
+        }
+
+        a:active {
+            background-color: #333333;
+        }
+        h1 {
+            font-size: 18px;
+        }
+
+        td:not(:first-child), th:not(:first-child) {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 
-    <main id="main"></main>
+<header>
+    <nav>
+    <a href="Index.html">New Project</a>
+    <a href="Archive.html" class="active">Archive</a>
+    <a href="upload.html">Upload files</a>
+    <a href="Helpfull%20sites.html">Helpfull Sites</a>
+</nav>
+</header>
 
-    <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
-    <script>
-        // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyCET3pKfudHlQb_Qw0NQ7DmIwXC4IB9KpI",
-            authDomain: "pakkelister.firebaseapp.com",
-            databaseURL: "https://pakkelister.firebaseio.com",
-            projectId: "pakkelister",
-            storageBucket: "",
-            messagingSenderId: "774732928106"
-        };
-        firebase.initializeApp(config);
-    </script>
+<main id="main"></main>
 
-    <script>
+<script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+<script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyCET3pKfudHlQb_Qw0NQ7DmIwXC4IB9KpI",
+        authDomain: "pakkelister.firebaseapp.com",
+        databaseURL: "https://pakkelister.firebaseio.com",
+        projectId: "pakkelister",
+        storageBucket: "pakkelister.appspot.com",
+        messagingSenderId: "774732928106"
+    };
+    firebase.initializeApp(config);
+</script>
 
-        const db = firebase.database();
-        const bestillinger = db.ref("bestillinger");
-        const main = document.getElementById("main");
-
-        function visBestilling(snap){
-
-
-            snap.forEach(function(data){
-                console.log("TEETET");
-            });
-
-            let bestilling = snap.val();
-            let key = snap.key;
-            console.log("TEST");
-            main.innerHTML += `
-                <a href="detaljer.html?id=${key}">
-                    ${key}
-                </a>
+<script>
+    const db = firebase.database();
+    const betillinger = db.ref("betillinger");
+    function visPakkeliste(snap){
+        let h1 = document.createElement("h1");
+        h1.innerHTML = snap.key;
+        main.appendChild(h1);
+        let tabell = document.createElement("table");
+        let thead = document.createElement("thead");
+        let tbody = document.createElement("tbody");
+        thead.innerHTML = `
+                <tr>
+                    <th>Utstyr</th>
+                    <th>Antall</th>
+                    <th>Pris</th>
+                    <th>Sum</th>
+                </tr>
             `;
-        }
+        tabell.appendChild(thead);
+        tabell.appendChild(tbody);
+        main.appendChild(tabell);
+        console.log("Bestilling: " + snap.key);
+        //alert(snap.key);
+        let sum = 0;
+        snap.forEach(function(ordre) {
+            // key will be "ada" the first time and "alan" the second time
+            var key = ordre.key;
+            console.log(key);
+            // childData will be the actual contents of the child
+            var data = ordre.val();
+            sum += data.pris * data.antall;
+            console.log("Pris: " + data.pris + " Antall: " + data.antall + " Sum: " + data.pris * data.antall);
+            tbody.innerHTML += `
+                    <tr>
+                        <td>${data.navn}</td>
+                        <td>${data.antall}</td>
+                        <td>${data.pris}</td>
+                        <td>${data.pris * data.antall}</td>
+                    </tr>
+                `;
+        });
+        main.innerHTML += `<p>Totalsum: ${sum}</p>`;
+    }
+    betillinger.on("child_added", visPakkeliste);
+</script>
 
-        bestillinger.on("value", visBestilling);
-
-
-    </script>
 </body>
-</html>
+</html></html>
