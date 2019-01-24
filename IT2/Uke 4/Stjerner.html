@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stjernehimmel</title>
+    <style>
+        body{
+            height: 100%;
+            background-color: #222222;
+        }
+        .stjerne{
+            position: absolute;
+            background-color: mintcream;
+            border-radius: 70%;
+        }
+    </style>
+</head>
+<body>
+<script>
+    for(var i=0; i<3000; i++){
+        var stjerne =document.createElement("div");
+        stjerne.className = "stjerne";
+        stjerne.style.left = Math.random()*innerWidth + "px";
+        stjerne.style.top = Math.random()*innerHeight + "px";
+        stjerne.style.width = Math.random()*3 + "px";
+        stjerne.style.height = stjerne.style.width;
+        document.body.appendChild(stjerne);
+    }
+</script>
+</body>
+</html>
